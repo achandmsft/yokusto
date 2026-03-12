@@ -1,6 +1,6 @@
-# Hypothesis-Driven Storm Analysis (YOLO Mode Demo)
+# Demo: Investigate Mode
 
-This project demonstrates **yokusto's YOLO hypothesis mode** — autonomous, evidence-based data exploration that tests a hypothesis with multiple dashboards.
+This project demonstrates **yokusto's Investigate mode** — autonomous, evidence-based data exploration that tests a hypothesis with multiple dashboards.
 
 ## Hypothesis
 

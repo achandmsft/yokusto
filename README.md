@@ -76,11 +76,11 @@ StormEvents | summarize count() by State | top 10 by count_
 Analyze this and show me what else is interesting
 ```
 
-![Query Exploration](projects/demo-query-driven/images/query_exploration_preview.png)
+![Query Exploration](projects/demo-explore/images/query_exploration_preview.png)
 
 The agent runs your seed query, discovers the broader schema, and produces follow-up analyses automatically — then suggests next questions.
 
-📄 [Live demo](https://achandmsft.github.io/yokusto/projects/demo-query-driven/query_exploration_dashboard.html) · [Project files](projects/demo-query-driven/)
+📄 [Live demo](https://achandmsft.github.io/yokusto/projects/demo-explore/query_exploration_dashboard.html) · [Project files](projects/demo-explore/)
 
 ---
 
@@ -94,11 +94,11 @@ per event than other storm types. Prove or disprove this using
 https://help.kusto.windows.net, database Samples, table StormEvents
 ```
 
-![Hypothesis Summary](projects/demo-hypothesis/images/hypothesis_summary_preview.png)
+![Hypothesis Summary](projects/demo-investigate/images/hypothesis_summary_preview.png)
 
 The agent decomposes your claim into sub-questions, gathers evidence for and against, and delivers a verdict across multiple dashboards.
 
-📄 [Live demo](https://achandmsft.github.io/yokusto/projects/demo-hypothesis/hypothesis_summary.html) · [Project files](projects/demo-hypothesis/)
+📄 [Live demo](https://achandmsft.github.io/yokusto/projects/demo-investigate/hypothesis_summary.html) · [Project files](projects/demo-investigate/)
 
 ---
 
@@ -180,6 +180,6 @@ git fetch upstream && git merge upstream/main
 .devcontainer/devcontainer.json    # Dev Container config
 projects/
 ├── demo-visualize/                # Mode 1 demo (safe to delete)
-├── demo-query-driven/             # Mode 2 demo (safe to delete)
-└── demo-hypothesis/               # Mode 3 demo (safe to delete)
+├── demo-explore/                  # Mode 2 demo (safe to delete)
+└── demo-investigate/              # Mode 3 demo (safe to delete)
 ```

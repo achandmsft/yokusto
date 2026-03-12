@@ -1,4 +1,4 @@
-# Demo: Query-Driven Exploration
+# Demo: Explore Mode
 
 Start from an existing KQL query and let yokusto explore outward — discovering patterns, suggesting follow-ups, and building a rich dashboard automatically.
 
@@ -24,7 +24,7 @@ StormEvents | summarize count() by State | top 10 by count_
 ## Re-run
 
 ```bash
-cd projects/demo-query-driven
+cd projects/demo-explore
 pip install azure-kusto-data azure-identity
 az login
 python run_query_exploration.py
