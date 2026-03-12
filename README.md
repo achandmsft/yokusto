@@ -1,6 +1,6 @@
 # yokusto — Natural Language Kusto Analytics in VS Code
 
-Ask plain-English questions about any Azure Data Explorer (Kusto) cluster and get a polished HTML dashboard — no KQL knowledge required.
+Ask plain English questions about any Azure Data Explorer (Kusto) cluster and get a polished HTML dashboard - no KQL knowledge required.
 
 ![flow](https://img.shields.io/badge/flow-Question→Query→Dashboard-blue)
 
@@ -18,13 +18,11 @@ az login --scope "https://kusto.kusto.windows.net/.default"
 
 Open the folder in VS Code, type `@yokusto` in Copilot Chat, and go.
 
-> **Multiple Azure tenants?** Add `--tenant <TENANT_ID>` to the `az login` command.
-
 ---
+<details>
+<summary><strong>Full setup (using Dev Container)</strong></summary>
 
-## Zero-Install Setup (Dev Container)
-
-Don't have Python or Azure CLI? Use the included Dev Container — it installs everything for you.
+## Easy Install (Dev Container)
 
 **Option A — GitHub Codespaces (cloud, nothing to install)**
 
@@ -34,7 +32,6 @@ Don't have Python or Azure CLI? Use the included Dev Container — it installs e
    ```bash
    az login --use-device-code --scope "https://kusto.kusto.windows.net/.default"
    ```
-   > **Different tenant?** Add `--tenant <TENANT_ID>` if your Kusto cluster lives in a specific tenant.
 4. Type `@yokusto` in Copilot Chat — done.
 
 **Option B — VS Code + Docker (local)**
@@ -45,13 +42,12 @@ Don't have Python or Azure CLI? Use the included Dev Container — it installs e
    ```bash
    az login --scope "https://kusto.kusto.windows.net/.default"
    ```
-   > **Different tenant?** Add `--tenant <TENANT_ID>` if your Kusto cluster lives in a specific tenant.
 4. Type `@yokusto` in Copilot Chat — done.
 
 > **Note:** The Dev Container pre-installs Python, Azure CLI, and pip packages, but `az login` is always required — Azure auth tokens are tied to your identity and can't be baked into a container.
 
 ---
-
+</details>
 <details>
 <summary><strong>Full prerequisites (if not using Dev Container)</strong></summary>
 
@@ -71,6 +67,8 @@ Don't have Python or Azure CLI? Use the included Dev Container — it installs e
 Type `@` in Copilot Chat — you should see **yokusto** in the list. If not:
 - Confirm `.github/agents/yokusto.agent.md` exists at the workspace root.
 - Reload VS Code: `Ctrl+Shift+P` → **"Developer: Reload Window"**.
+
+> **Different tenant?** Add `--tenant <TENANT_ID>` if your Kusto cluster lives in a specific tenant.
 
 ---
 
