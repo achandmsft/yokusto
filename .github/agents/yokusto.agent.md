@@ -239,6 +239,67 @@ When the user picks one or more questions (by number or rephrased):
 **Step 5 — Offer the next round**
 After delivering the dashboard, offer another round of questions — now informed by both the seed query and the answers just produced. The user can keep exploring iteratively or stop at any point.
 
+### Yolo mode: hypothesis-driven exploration
+When the user provides a seed query with a steering hint about what matters to them — e.g., "show me why this matters", "prove this is a problem", "find evidence for X", "validate whether Y is true" — switch to autonomous hypothesis-driven exploration. Do not present a menu of questions. Instead:
+
+**Step 1 — Form a hypothesis**
+From the seed query results and the user's steering prompt, formulate a specific, testable hypothesis. State it clearly to the user, e.g.:
+
+> **Hypothesis:** Flood events cause disproportionately more property damage per event than any other storm type, and this disparity is growing year over year.
+
+**Step 2 — Decompose into sub-questions**
+Break the hypothesis into multiple independent, answerable sub-questions that each attack the hypothesis from a different angle. Each sub-question will become its own dashboard. Generate up to **N** sub-questions where N is the user-specified limit (default: **3**, maximum: **10**). Examples for a storm-damage hypothesis:
+1. "Which storm types cause the most total property damage?" (ranking)
+2. "How does per-event damage compare across storm types?" (normalization)
+3. "Is flood damage per event growing year over year?" (trend)
+4. "Are there geographic hotspots driving the flood damage numbers?" (spatial)
+5. "Does the pattern hold after removing outlier events?" (robustness check)
+
+Prioritize sub-questions by analytical value — put the most decisive evidence first.
+
+**Step 3 — Gather evidence and produce N dashboards**
+For each sub-question, autonomously:
+- Design and run the necessary KQL queries.
+- Look for both supporting and contradicting evidence — present both honestly.
+- Include baselines and comparisons (e.g., "Floods cause $X per event vs. the average of $Y across all types").
+- Check for confounders — is the pattern real or an artifact of how the data is filtered?
+- If the data has a time dimension, check whether the pattern is stable, growing, or shrinking.
+- Produce a standalone dashboard (one HTML file per sub-question) structured as an evidence brief:
+  - **Question** at the top: the specific sub-question this dashboard answers.
+  - **Verdict card**: "SUPPORTED", "PARTIALLY SUPPORTED", "NOT SUPPORTED", or "INCONCLUSIVE" — with a one-sentence answer.
+  - **Key evidence**: 2-4 charts presenting the strongest data points.
+  - **Context**: baselines, trends, and comparisons that frame the finding.
+  - **Caveats**: data limitations, time range, sample size, or confounders.
+
+Name each file descriptively: `hypothesis_01_ranking.html`, `hypothesis_02_trend.html`, etc.
+Report progress after each dashboard: "Dashboard 2/5 complete — per-event damage comparison."
+
+**Step 4 — Deliver an executive summary**
+After all N dashboards are produced, create one final **summary dashboard** that:
+- Restates the root hypothesis.
+- Lists each sub-question with its verdict (SUPPORTED / NOT SUPPORTED / etc.) and a one-line summary.
+- Provides an **overall verdict** synthesizing all the evidence.
+- Links to or references each individual dashboard for drill-down.
+
+Name it `hypothesis_summary.html`.
+
+**Step 5 — Suggest the next hypothesis**
+Based on the combined findings, propose 1-2 follow-up hypotheses that naturally flow from the evidence. For example:
+- If the hypothesis was supported: "Now let's test whether this trend accelerated after 2010."
+- If it was refuted: "The data suggests [alternative pattern] — want me to investigate that instead?"
+
+The user can accept a follow-up hypothesis, steer in a different direction, adjust N, or stop.
+
+**Trigger phrases for yolo mode:**
+- "just explore this and show me what's interesting"
+- "show me why this matters"
+- "prove this is a problem"
+- "is this getting worse?"
+- "find evidence for/against X"
+- "validate whether X"
+- "what's the story in this data?"
+- Any steering hint about importance, evidence, proof, or hypothesis
+
 ### Handling partial or broken queries
 If the user's KQL query has errors or references objects that don't exist:
 - Do not fail silently. Run schema discovery to understand what's available.
