@@ -82,7 +82,7 @@ These dashboards were generated entirely by yokusto from a single natural-langua
 
 **What you get:** A dark-themed dashboard with 5 KPI cards ($12B total damage, 702 deaths, 1,842 injuries, 59K events, 67 states), a dual-axis monthly trend (bars for event count, lines for damage $ and deaths), horizontal bar ranking of the 12 deadliest storm types, stacked property-vs-crop damage by state, a doughnut chart of fatalities by cause, and a detailed breakdown table.
 
-📄 Output: [`storm_dashboard.html`](storm_dashboard.html)
+📄 Output: [`storm_dashboard.html`](https://achandmsft.github.io/yokusto/storm_dashboard.html)
 
 ![Storm Dashboard Preview](images/storm_dashboard_preview.png)
 
@@ -94,7 +94,7 @@ These dashboards were generated entirely by yokusto from a single natural-langua
 
 **What you get:** A midnight-blue dashboard with 5 KPI cards ($923M revenue, $490M cost, 46.9% margin, 3.8M transactions, 18K customers), a revenue/cost/margin trend line, top-10 countries horizontal bar, grouped revenue-vs-cost by product category, gender doughnut, education bar chart, and a top-15 cities table.
 
-📄 Output: [`sales_dashboard.html`](sales_dashboard.html)
+📄 Output: [`sales_dashboard.html`](https://achandmsft.github.io/yokusto/sales_dashboard.html)
 
 ![Sales Dashboard Preview](images/sales_dashboard_preview.png)
 
@@ -106,7 +106,7 @@ These dashboards were generated entirely by yokusto from a single natural-langua
 
 **What you get:** A GitHub-dark themed dashboard with seasonal KPI cards (Summer: 23K events/$3.5B, Spring: 18K/$5.1B, Fall: 11K/$2.4B, Winter: 6K/$915M), a stacked bar of the top 10 storm types across all 12 months, a polar area chart showing hour-of-day activity, a seasonal doughnut, average storm duration by type (droughts last 200+ hours!), and a state×month hotspot table.
 
-📄 Output: [`seasons_dashboard.html`](seasons_dashboard.html)
+📄 Output: [`seasons_dashboard.html`](https://achandmsft.github.io/yokusto/seasons_dashboard.html)
 
 ![Seasons Dashboard Preview](images/seasons_dashboard_preview.png)
 
