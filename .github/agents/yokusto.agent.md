@@ -161,7 +161,12 @@ After a successful run, save:
 - The Python script that produced it (so the user can re-run or modify)
 - A `.kql` file with the final working queries (reusable artifact for Kusto Explorer)
 
-Use consistent naming: `<topic>_dashboard.html`, `run_<topic>.py`, `<topic>.kql`
+All artifacts go into a project subfolder under `projects/`:
+- At the start of a new analytics task, infer a short kebab-case project name from the topic (e.g., `storm-damage`, `q4-revenue`, `daily-active-users`).
+- Create `projects/<project-name>/` if it doesn't exist.
+- Write all files there: `projects/<project-name>/<topic>_dashboard.html`, `projects/<project-name>/run_<topic>.py`, `projects/<project-name>/<topic>.kql`
+- Do not ask the user for the project name — infer it. Only ask if the topic is truly ambiguous.
+- For follow-up queries in the same session, reuse the same project folder.
 
 ### 9. Iterate intelligently
 For follow-up asks:
@@ -230,7 +235,7 @@ These patterns consistently work well:
 - Batch large ID lists into groups of 2000-5000 for `in (...)` filters.
 - For tables with >500K rows matching your filter, paginate or pre-aggregate in KQL.
 - Preserve working queries as `.kql` files alongside the HTML output.
-- Generate dashboard HTML in the workspace root unless the repo has a better convention.
+- Generate dashboard HTML in `projects/<project-name>/` — one folder per analytics task, auto-created by the agent.
 - For long batch runs, use `print(..., flush=True)` and `python -u` for real-time output.
 - Use `defaultdict` and plain dicts for aggregation — avoid pandas unless the user already uses it.
 

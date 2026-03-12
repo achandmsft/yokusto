@@ -82,9 +82,9 @@ These dashboards were generated entirely by yokusto from a single natural-langua
 
 **What you get:** A dark-themed dashboard with 5 KPI cards ($12B total damage, 702 deaths, 1,842 injuries, 59K events, 67 states), a dual-axis monthly trend (bars for event count, lines for damage $ and deaths), horizontal bar ranking of the 12 deadliest storm types, stacked property-vs-crop damage by state, a doughnut chart of fatalities by cause, and a detailed breakdown table.
 
-📄 Output: [`storm_dashboard.html`](https://achandmsft.github.io/yokusto/storm_dashboard.html)
+📄 Output: [`storm_dashboard.html`](https://achandmsft.github.io/yokusto/projects/demo/storm_dashboard.html)
 
-![Storm Dashboard Preview](images/storm_dashboard_preview.png)
+![Storm Dashboard Preview](projects/demo/images/storm_dashboard_preview.png)
 
 ---
 
@@ -94,9 +94,9 @@ These dashboards were generated entirely by yokusto from a single natural-langua
 
 **What you get:** A midnight-blue dashboard with 5 KPI cards ($923M revenue, $490M cost, 46.9% margin, 3.8M transactions, 18K customers), a revenue/cost/margin trend line, top-10 countries horizontal bar, grouped revenue-vs-cost by product category, gender doughnut, education bar chart, and a top-15 cities table.
 
-📄 Output: [`sales_dashboard.html`](https://achandmsft.github.io/yokusto/sales_dashboard.html)
+📄 Output: [`sales_dashboard.html`](https://achandmsft.github.io/yokusto/projects/demo/sales_dashboard.html)
 
-![Sales Dashboard Preview](images/sales_dashboard_preview.png)
+![Sales Dashboard Preview](projects/demo/images/sales_dashboard_preview.png)
 
 ---
 
@@ -106,13 +106,53 @@ These dashboards were generated entirely by yokusto from a single natural-langua
 
 **What you get:** A GitHub-dark themed dashboard with seasonal KPI cards (Summer: 23K events/$3.5B, Spring: 18K/$5.1B, Fall: 11K/$2.4B, Winter: 6K/$915M), a stacked bar of the top 10 storm types across all 12 months, a polar area chart showing hour-of-day activity, a seasonal doughnut, average storm duration by type (droughts last 200+ hours!), and a state×month hotspot table.
 
-📄 Output: [`seasons_dashboard.html`](https://achandmsft.github.io/yokusto/seasons_dashboard.html)
+📄 Output: [`seasons_dashboard.html`](https://achandmsft.github.io/yokusto/projects/demo/seasons_dashboard.html)
 
-![Seasons Dashboard Preview](images/seasons_dashboard_preview.png)
+![Seasons Dashboard Preview](projects/demo/images/seasons_dashboard_preview.png)
 
 ---
 
 > **Want to try?** Just paste any of the prompts above into Copilot Chat with `@yokusto` — or make up your own question. The agent discovers schema, writes KQL, runs it, and builds the dashboard automatically.
+
+---
+
+## Create Your Own Projects
+
+yokusto is designed as a **personal analytics workspace**. Fork this repo, and each Copilot Chat session becomes a self-contained project — with its own dashboards, queries, and Python scripts — that you can share via GitHub Pages.
+
+### How it works
+
+1. **Fork this repo** — you get the yokusto agent + the demo project as a starting point.
+2. **Start a new chat session** — type `@yokusto` followed by your question. The agent creates a project folder under `projects/` automatically (e.g., `projects/q4-revenue-analysis/`).
+3. **Each project is self-contained** — the agent writes all artifacts into that folder:
+   ```
+   projects/q4-revenue-analysis/
+   ├── run_q4_revenue.py              # Re-runnable Python script
+   ├── q4_revenue_dashboard.html      # The visualization
+   └── q4_revenue.kql                 # Working KQL queries
+   ```
+4. **Push to main** — GitHub Pages auto-publishes every project's dashboards.
+5. **Share the link** — send `https://<you>.github.io/<repo>/projects/q4-revenue-analysis/q4_revenue_dashboard.html` to leadership, colleagues, or customers.
+
+### Example workflow
+
+```
+# Session 1: Storm analysis
+@yokusto Show me storm damage from https://help.kusto.windows.net, database Samples, table StormEvents
+→ creates projects/storm-damage/
+
+# Session 2: Sales deep-dive
+@yokusto Build a sales dashboard from https://help.kusto.windows.net, database ContosoSales
+→ creates projects/contoso-sales/
+
+# Session 3: Your production cluster
+@yokusto Show me daily active users from https://mycluster.kusto.windows.net, database Prod
+→ creates projects/daily-active-users/
+```
+
+Over time your repo becomes a portfolio of analytics projects — all queryable, re-runnable, and shareable.
+
+> **Tip:** The `projects/demo/` folder is just the showcase. Delete it anytime with `rm -rf projects/demo` — the agent and setup files are unaffected.
 
 ---
 
@@ -198,13 +238,17 @@ All of these work against the free public demo cluster. Replace the URL with you
 
 ## Outputs
 
-After a successful run, the agent creates files in your workspace:
+After a successful run, the agent creates a project folder with these files:
 
-| File | Purpose |
-|---|---|
-| `<topic>_dashboard.html` | The HTML visualization — open in a browser |
-| `run_<topic>.py` | The Python script that produced it — re-runnable |
-| `<topic>.kql` | The working KQL queries — paste into Kusto Explorer if needed |
+```
+projects/<project-name>/
+├── <topic>_dashboard.html      # The HTML visualization — open in a browser
+├── run_<topic>.py              # The Python script — re-runnable and editable
+└── <topic>.kql                 # Working KQL queries — paste into Kusto Explorer
+```
+
+With GitHub Pages enabled, every dashboard is automatically published and shareable at:
+`https://<you>.github.io/<repo>/projects/<project-name>/<topic>_dashboard.html`
 
 ---
 
@@ -239,15 +283,19 @@ You need at least **Viewer** permissions on the Kusto cluster. Ask your cluster 
 
 ```
 .devcontainer/
-└── devcontainer.json            # Zero-install setup for Codespaces / Docker
+└── devcontainer.json              # Zero-install setup for Codespaces / Docker
 .github/
 ├── agents/
-│   └── yokusto.agent.md         # Agent definition (the brain)
+│   └── yokusto.agent.md           # Agent definition (the brain)
 └── prompts/
-    └── yokusto.prompt.md        # Slash-command entry point
-README.md                        # This file
-run_demos.py                     # Generates the 3 showcase dashboards below
-storm_dashboard.html             # Demo 1 — US Storm Damage & Destruction
-sales_dashboard.html             # Demo 2 — Contoso Global Sales Analytics
-seasons_dashboard.html           # Demo 3 — Storm Seasons: When & Where
+    └── yokusto.prompt.md          # Slash-command entry point
+projects/
+└── demo/                          # Showcase dashboards (safe to delete)
+    ├── README.md
+    ├── run_demos.py
+    ├── storm_dashboard.html
+    ├── sales_dashboard.html
+    ├── seasons_dashboard.html
+    └── images/
+README.md                          # This file
 ```
