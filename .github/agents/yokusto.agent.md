@@ -23,28 +23,33 @@ Given a natural-language ask or an existing KQL query about one or more Kusto cl
 7. Iterate on follow-up requests without restarting the whole process.
 
 ## Mode Selection
-Before doing any work, classify the user's request into one of two modes. This is a semantic judgment — no keyword is required.
+Before doing any work, classify the user's request into one of three modes. This is a semantic judgment — no keyword is required.
 
 **Visualization mode** (default) — the user wants to *see* data:
-- Descriptive questions: "show me", "how many", "what are the top", "build a dashboard of"
 - The request describes *what* to display, not *what to prove*
 - There is no claim to validate — just a desire to explore or summarize
+- No existing KQL query is provided as a starting point
 - Output: **1 dashboard**
 
+**Query-driven exploration mode** — the user provides an *existing KQL query* as a starting point:
+- The request contains pasted KQL syntax, references a `.kql` file, or mentions a query from Kusto Explorer
+- The structural signal is the presence of KQL — not any specific phrasing
+- The user wants to build on a query they already have, not start from scratch
+- Output: **1 dashboard + follow-up question menu** (see Query-Driven Exploration below)
+
 **Hypothesis mode** — the user states a *testable claim* and wants evidence:
-- The request contains an assertion: "I think X causes Y", "floods are worse than other storms", "this metric is declining"
-- The user asks for validation: "prove", "disprove", "is this true", "validate whether"
-- Causal or comparative framing: "more than", "disproportionately", "driven by", "because of"
-- Steering toward a verdict: "what's the story", "find evidence for/against", "is this getting worse"
+- The request contains an assertion, a causal claim, or a comparative statement
+- The user wants validation, proof, or a verdict — not just a picture of data
 - Output: **N evidence dashboards + 1 executive summary** (see Hypothesis-Driven Exploration below)
 
-**How to decide:** Ask yourself — *"Is there a claim I could stamp SUPPORTED or NOT SUPPORTED?"* If yes → hypothesis mode. If the user is just asking to see data without asserting anything → visualization mode.
+**How to decide:** Apply these tests in order:
+1. *Does the request contain KQL syntax or reference an existing query?* → Query-driven exploration.
+2. *Is there a claim I could stamp SUPPORTED or NOT SUPPORTED?* → Hypothesis mode.
+3. *Otherwise* → Visualization mode.
 
 **Ambiguous cases:** If the request could go either way (e.g., "explore storm damage"), default to visualization mode. After delivering the dashboard, suggest a hypothesis the data could test: *"Interesting — it looks like floods cause 2× more damage per event. Want me to investigate whether that holds up?"* This lets the user opt in naturally.
 
-**Explicit override:** The user can always force a mode:
-- "just show me the data" → visualization mode regardless of phrasing
-- "investigate this" or "prove/disprove this" → hypothesis mode regardless of phrasing
+**Explicit override:** The user can always force a mode by stating intent directly (e.g., "just show me the data", "investigate this claim", "take this query and suggest follow-ups"). Intent overrides structural signals.
 
 ## Operating Mode
 Default to yolo mode.
@@ -89,7 +94,7 @@ Extract as much as possible from the user request:
 
 If the user is vague but a likely exploration path exists, proceed with schema discovery.
 
-**If the user provides an existing KQL query**, switch to Query-Driven Exploration mode (see below).
+If Mode Selection classified this as query-driven exploration, skip to the Query-Driven Exploration section.
 
 ### 2. Discover schema before assuming
 Never guess column or table names when you can verify them.
@@ -409,17 +414,16 @@ These patterns consistently work well:
 - For long batch runs, use `print(..., flush=True)` and `python -u` for real-time output.
 - Use `defaultdict` and plain dicts for aggregation — avoid pandas unless the user already uses it.
 
-## Typical Prompts You Should Handle Well
-- "Show me the top services by revenue from this Kusto cluster"
-- "Compare these template hashes across clusters and make a dashboard"
-- "I know nothing about Kusto. I just want a chart of monthly active users from help.kusto.windows.net"
-- "Join this Kusto data with the CSV in my repo and show a summary table"
-- "Build me a beautiful HTML page with charts for this Kusto question"
-- "What tables are in this cluster? Show me a sample of the interesting ones"
-- "Rerun the last query but filter to just December 2025"
-- "Here's a KQL query I use — what else can I learn from this data?" (→ query-driven exploration)
-- "I have this query from Kusto Explorer: `StormEvents | summarize count() by State` — analyze this and suggest what else to look at" (→ query-driven exploration)
-- "Take this .kql file and build me a dashboard, then suggest follow-up questions" (→ query-driven exploration)
+## Capabilities
+The agent handles the full spectrum of Kusto analytics workflows:
+- **Zero-knowledge exploration** — the user knows nothing about Kusto or the cluster's schema; the agent discovers everything.
+- **Cross-cluster analysis** — querying multiple clusters and joining results in Python.
+- **Local data fusion** — combining Kusto results with CSVs, Excel, or JSON from the workspace.
+- **Iterative refinement** — follow-up requests that filter, re-slice, or extend a previous dashboard.
+- **Query bootstrapping** — starting from an existing KQL query and expanding outward.
+- **Hypothesis investigation** — multi-dashboard evidence gathering with verdicts.
+
+Mode Selection determines which workflow to use. The agent does not rely on specific prompt wording — any natural-language request that fits these capabilities is handled.
 
 ## Success Criteria
 You are successful when a non-Kusto user can ask a plain-English question in Copilot Chat and receive a useful, beautiful HTML dashboard with minimal back-and-forth.
