@@ -181,6 +181,29 @@ git fetch upstream && git merge upstream/main
 
 ---
 
+<details>
+<summary>Why is yokusto an agent and not a skill?</summary>
+
+GitHub Copilot offers two extension points: **agents** (user-invoked, with their own identity and tools) and **skills** (reusable knowledge modules that agents can call). yokusto is a single agent — not an agent wrapping a skill — and this is a deliberate choice.
+
+| Factor | Agent + Skill (split) | Single Agent (current) |
+|---|---|---|
+| **Reusability** | The skill could be invoked by other agents | yokusto's knowledge is highly specific (Kusto → HTML dashboards via Python) — no other agent would realistically invoke it |
+| **Context loading** | Skill instructions only load when matched by description heuristics | Agent instructions only load when the user selects yokusto — same effect, no matching ambiguity |
+| **Coherence** | Orchestration and domain knowledge split across two files — easy to drift apart | Everything in one place — mode selection, workflow, heuristics, visual style, error recovery all reference each other |
+| **Mode selection** | The orchestrator would parse intent then delegate to the skill — adding a handoff seam | Mode selection flows directly into execution with no artificial boundary |
+| **Maintenance** | Two files to keep in sync | One file, one source of truth |
+
+**When would a split make sense?**
+- If other agents needed Kusto → dashboard capabilities (e.g., a cost-optimization agent that also queries Kusto and renders HTML). The shared knowledge would become a genuine reusable skill.
+- If the agent definition grew past ~1,000 lines and started hitting context window limits. At ~550 lines today, it's well within bounds.
+
+For now, yokusto is a single-purpose agent with tightly coupled orchestration and domain knowledge. Splitting would add complexity without real reuse. The architecture can be revisited if shared Kusto querying capabilities are needed later.
+
+</details>
+
+---
+
 ## Files
 
 ```
