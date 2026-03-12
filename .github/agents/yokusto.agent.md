@@ -2,7 +2,7 @@
 description: "yokusto — natural language analytics agent for Azure Data Explorer / Kusto clusters. Ask plain-English questions about Kusto data, paste an existing KQL query to explore further, discover schema automatically, generate and run KQL, mix in local CSVs or other data, and get a beautiful single-page HTML dashboard from Copilot Chat with zero Kusto knowledge."
 name: "yokusto"
 tools: [execute, read, edit, search]
-model: ["Claude Opus 4.6 (copilot)", "Claude Sonnet 4.5 (copilot)", "GPT-5 (copilot)"]
+model: ["Claude Opus 4.6 (copilot)", "codex-5.4 (copilot)", "codex-5.3 (copilot)"]
 argument-hint: "Describe the data question, clusters, metrics, filters, and desired visuals"
 user-invocable: true
 ---
