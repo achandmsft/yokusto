@@ -72,59 +72,41 @@ Type `@` in Copilot Chat — you should see **yokusto** in the list. If not:
 
 ---
 
-## 🎯 Try It Now — 3 Stunning Demos
+## 🎯 Try It Now
 
-These dashboards were generated entirely by yokusto from a single natural-language prompt each, using the **free public demo cluster** `https://help.kusto.windows.net`. No KQL written by hand.
+All demos use the **free public cluster** `https://help.kusto.windows.net` — no setup beyond Quick Start.
 
-### Demo 1 — US Storm Damage & Destruction
+---
+
+### Demo 1 — Prompt → Dashboard (one question, one dashboard)
+
+Ask a plain-English question, get a polished dashboard. No KQL required.
 
 > **Prompt:** `@yokusto Show me storm damage by state, event type, and month from https://help.kusto.windows.net, database Samples, table StormEvents — include deaths, injuries, property damage $, and crop damage $`
 
-**What you get:** A dark-themed dashboard with 5 KPI cards ($12B total damage, 702 deaths, 1,842 injuries, 59K events, 67 states), a dual-axis monthly trend (bars for event count, lines for damage $ and deaths), horizontal bar ranking of the 12 deadliest storm types, stacked property-vs-crop damage by state, a doughnut chart of fatalities by cause, and a detailed breakdown table.
-
-📄 Output: [`storm_dashboard.html`](https://achandmsft.github.io/yokusto/projects/demo-basic/storm_dashboard.html)
-
 ![Storm Dashboard Preview](projects/demo-basic/images/storm_dashboard_preview.png)
 
----
+**What you get:** A dark-themed dashboard with 5 KPI cards ($12B total damage, 702 deaths, 4,548 injuries, 59K events, 67 states), a dual-axis monthly trend, horizontal bar ranking of the deadliest storm types, stacked property-vs-crop damage by state, and a detailed breakdown table — all from a single prompt.
 
-### Demo 2 — Contoso Global Sales Analytics
-
-> **Prompt:** `@yokusto Build a sales dashboard from https://help.kusto.windows.net, database ContosoSales — monthly revenue trend, top 10 countries, product category breakdown, margin analysis, and customer demographics`
-
-**What you get:** A midnight-blue dashboard with 5 KPI cards ($923M revenue, $490M cost, 46.9% margin, 3.8M transactions, 18K customers), a revenue/cost/margin trend line, top-10 countries horizontal bar, grouped revenue-vs-cost by product category, gender doughnut, education bar chart, and a top-15 cities table.
-
-📄 Output: [`sales_dashboard.html`](https://achandmsft.github.io/yokusto/projects/demo-basic/sales_dashboard.html)
-
-![Sales Dashboard Preview](projects/demo-basic/images/sales_dashboard_preview.png)
+📄 [Open live dashboard](https://achandmsft.github.io/yokusto/projects/demo-basic/storm_dashboard.html) · [More demos in `projects/demo-basic/`](projects/demo-basic/) (sales analytics, storm seasonality)
 
 ---
 
-### Demo 3 — Storm Seasons: When & Where Storms Strike
+### Demo 2 — Hypothesis Mode (validate or disprove a claim)
 
-> **Prompt:** `@yokusto Analyze temporal storm patterns from https://help.kusto.windows.net, database Samples, table StormEvents — show seasonality, hourly patterns, storm duration by type, and busiest state×month combinations`
-
-**What you get:** A GitHub-dark themed dashboard with seasonal KPI cards (Summer: 23K events/$3.5B, Spring: 18K/$5.1B, Fall: 11K/$2.4B, Winter: 6K/$915M), a stacked bar of the top 10 storm types across all 12 months, a polar area chart showing hour-of-day activity, a seasonal doughnut, average storm duration by type (droughts last 200+ hours!), and a state×month hotspot table.
-
-📄 Output: [`seasons_dashboard.html`](https://achandmsft.github.io/yokusto/projects/demo-basic/seasons_dashboard.html)
-
-![Seasons Dashboard Preview](projects/demo-basic/images/seasons_dashboard_preview.png)
-
----
-
-### Demo 4 — YOLO Hypothesis Mode: Are Floods Disproportionately Destructive?
+State a hypothesis and the agent autonomously decomposes it, gathers evidence across multiple dashboards, and delivers a verdict.
 
 > **Prompt:** `@yokusto I think flood events cause disproportionately more damage per event than other storm types. Prove or disprove this using https://help.kusto.windows.net, database Samples, table StormEvents`
 
-**What you get:** The agent enters **YOLO hypothesis mode** — it autonomously decomposes the hypothesis into 3 sub-questions, runs all the queries, and produces 4 dashboards: one per sub-question (damage ranking, per-event normalization, geographic hotspots) plus an executive summary with an overall verdict of **PARTIALLY SUPPORTED**.
+![Hypothesis Summary Preview](projects/demo-hypothesis/images/hypothesis_summary_preview.png)
 
-📄 Output: [`hypothesis_summary.html`](https://achandmsft.github.io/yokusto/projects/demo-hypothesis/hypothesis_summary.html) (+ 3 evidence dashboards)
+**What you get:** The agent enters **YOLO hypothesis mode** — it breaks the claim into 3 sub-questions (damage ranking, per-event normalization, geographic hotspots), runs all the queries, and produces **4 dashboards**: one per sub-question plus an executive summary with an overall verdict of **PARTIALLY SUPPORTED** — floods are 2.2× more damaging per event than average, but 4 other storm types are worse.
 
-See the full project: [`projects/demo-hypothesis/`](projects/demo-hypothesis/)
+📄 [Open summary dashboard](https://achandmsft.github.io/yokusto/projects/demo-hypothesis/hypothesis_summary.html) · [Full project with all 4 dashboards](projects/demo-hypothesis/)
 
 ---
 
-> **Want to try?** Just paste any of the prompts above into Copilot Chat with `@yokusto` — or make up your own question. The agent discovers schema, writes KQL, runs it, and builds the dashboard automatically.
+> **Want to try?** Paste either prompt into Copilot Chat with `@yokusto` — or make up your own. The agent discovers schema, writes KQL, runs it, and builds the dashboard automatically.
 
 ---
 
@@ -366,6 +348,7 @@ projects/
     ├── hypothesis_summary.html
     ├── hypothesis_01_ranking.html
     ├── hypothesis_02_per_event.html
-    └── hypothesis_03_geographic.html
+    ├── hypothesis_03_geographic.html
+    └── images/
 README.md                          # This file
 ```
