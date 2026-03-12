@@ -2,7 +2,7 @@
 
 Ask plain-English questions about any Azure Data Explorer (Kusto) cluster and get a polished HTML dashboard — no KQL knowledge required.
 
-![flow](https://img.shields.io/badge/flow-Question→Schema→Query→Dashboard-blue)
+![flow](https://img.shields.io/badge/flow-Question→Query→Dashboard-blue)
 
 ---
 
@@ -18,7 +18,7 @@ az login --scope "https://kusto.kusto.windows.net/.default"
 
 Open the folder in VS Code, type `@yokusto` in Copilot Chat, and go.
 
-> **Specific tenant?** Add `--tenant <TENANT_ID>` to the `az login` command.
+> **MUltiple Azure tenants?** Add `--tenant <TENANT_ID>` to the `az login` command.
 
 ---
 
