@@ -1,0 +1,30 @@
+# ─────────────────────────────────────────────────────────────────
+# yokusto — default .gitignore
+# ─────────────────────────────────────────────────────────────────
+# Dashboard HTML files contain REAL query results from your Kusto
+# cluster. Never push them to a public (or even private) repo
+# unless you have reviewed the data and accepted the risk.
+# Python scripts (.py) and KQL files (.kql) are safe — they
+# contain queries, not data.
+# ─────────────────────────────────────────────────────────────────
+
+# HTML dashboards — contain actual query data
+projects/**/*.html
+
+# Cached / intermediate data files
+projects/**/*.json
+projects/**/_*.py
+
+# Active local analysis projects (queries reference internal clusters)
+projects/sdk-adoption/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db

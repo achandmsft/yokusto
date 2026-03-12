@@ -109,10 +109,14 @@ Each session creates a self-contained project folder:
 projects/<project-name>/
 ├── <topic>_dashboard.html     # Open in any browser — no server needed
 ├── run_<topic>.py             # Re-runnable Python script
+├── render_<topic>_from_cache.py  # Regenerate HTML from cached data (no Kusto auth needed)
+├── _<topic>_data.json         # Cached query results
 └── <topic>.kql                # Working queries for Kusto Explorer
 ```
 
 Share the HTML file via email, Teams, or SharePoint. Recipients just open it — no setup.
+
+> **Your projects stay local by default.** The included `.gitignore` excludes all `projects/` HTML dashboards, JSON data caches, and any project folders you create from version control. Only the demo projects (which use the public `help.kusto.windows.net` cluster) are checked in. Your real analysis — queries, data, dashboards — never leaves your machine unless you explicitly override this.
 
 <details>
 <summary>Behind the scenes</summary>
@@ -183,6 +187,7 @@ git fetch upstream && git merge upstream/main
 .github/agents/yokusto.agent.md    # Agent definition (the brain)
 .github/prompts/yokusto.prompt.md  # Slash-command entry point
 .devcontainer/devcontainer.json    # Dev Container config
+.gitignore                         # Keeps your projects local by default
 projects/
 ├── demo-visualize/                # Mode 1 demo (safe to delete)
 ├── demo-explore/                  # Mode 2 demo (safe to delete)
