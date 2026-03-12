@@ -1,6 +1,6 @@
 # yokusto — Talk to Kusto Clusters in Plain English
 
-A VS Code Copilot agent that turns natural-language questions into Kusto (Azure Data Explorer) dashboards. No KQL knowledge required.
+yokusto — a GitHub Copilot agent that turns plain-English questions about your Azure Data Explorer data into rich, shareable HTML dashboards. No KQL required.
 
 Three modes depending on what you need:
 
